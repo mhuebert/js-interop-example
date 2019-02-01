@@ -1,0 +1,20 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/dev"
+  "src/main"
+  "src/test"]
+
+ :deps true
+
+ :builds
+ {:browser {:target :browser 
+            :modules {:app {:entries [example.core]}}
+            :output-dir "public/compiled"
+            :asset-path "/compiled"
+            :devtools {:http-root "public"}
+            :build-hooks [(chia.static.shadow/write-assets!
+                           {"../index.html" (chia.static.page/html-page 
+                                             {:title "Hello, world."
+                                              :styles [{:href "https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css"}]
+                                              :scripts/body [{:src "/compiled/app.js"}
+                                                             "example.core.init()"]})})]}}}
